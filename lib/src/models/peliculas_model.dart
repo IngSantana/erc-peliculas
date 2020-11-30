@@ -72,6 +72,14 @@ class Pelicula {
 
   }
 
+  getPosterImg(){
+    if (posterPath == null){
+      return 'https://www.claroplay.com/images/carousel/noimage_poster.png?_v=1.5.99';
+    }else{
+    return 'https://image.tmdb.org/t/p/w500/$posterPath';
+    }
+  }
+
 
 }
 
