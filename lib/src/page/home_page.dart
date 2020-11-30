@@ -1,3 +1,4 @@
+import 'package:el_real_cine/src/providers/peliculas_provider.dart';
 import 'package:el_real_cine/src/widget/card_swiper_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,9 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _swiperTarjetas() {
+
+    final peliculasProviders = new PeliculasProvider();
+    peliculasProviders.getEnCines();
 
     return CardSwiper(peliculas: [1,2,3,4,5],);
   }
