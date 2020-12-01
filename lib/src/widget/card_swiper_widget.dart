@@ -30,7 +30,7 @@ child:  FadeInImage(placeholder: AssetImage('assets/img/loading.gif'), image: Ne
     );
      
   },
-itemCount: 7,
+itemCount: peliculas.length,
 )
     );
   }
