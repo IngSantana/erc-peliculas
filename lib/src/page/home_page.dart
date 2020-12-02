@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: false,
-          title: Text('Pelicuas en Cartelera'),
+          title: Text('Peliculas en Cartelera'),
           backgroundColor: Colors.indigo,
           actions: <Widget>[
             IconButton(
@@ -23,10 +23,7 @@ class HomePage extends StatelessWidget {
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-             _swiperTarjetas(),
-              _footer(context)            
-            ],
+            children: <Widget>[_swiperTarjetas(), _footer(context)],
           ),
         ));
   }
@@ -39,46 +36,41 @@ class HomePage extends StatelessWidget {
           return CardSwiper(peliculas: snapshot.data);
         } else {
           return Container(
-            height: 400.0,
-            child: Center(
-              child: CircularProgressIndicator()
-              )
-           );
+              height: 400.0, child: Center(child: CircularProgressIndicator()));
         }
       },
     );
   }
 
-Widget _footer(BuildContext context){
+  Widget _footer(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            height: 5.0,
+          ),
+          Container(
+              padding: EdgeInsets.only(left: 20.0),
+              child: Text(
+                'Populares',
+                style: Theme.of(context).textTheme.subtitle1,
+              )),
+          FutureBuilder(
+            future: peliculasProviders.getPopulares(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              snapshot.data?.forEach((p) => print(p.title));
 
-  return Container(
-    width: double.infinity,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(
-          height: 5.0,
-        ),
-        Container(
-          padding: EdgeInsets.only(left: 20.0),
-          child: Text('Populares', style: Theme.of(context).textTheme.subtitle1,)),
-
-      FutureBuilder(
-        future: peliculasProviders.getPopulares(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-
-          snapshot.data?.forEach( (p) => print(p.title));
-
-          if ( snapshot.hasData ){
-            return MovieHorizontal(pelicula: snapshot.data);
-          }else{
-            return Center(child: CircularProgressIndicator());
-          }
-        },
+              if (snapshot.hasData) {
+                return MovieHorizontal(pelicula: snapshot.data);
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+        ],
       ),
-
-      ],
-    ),
-  );
-}
+    );
+  }
 }
