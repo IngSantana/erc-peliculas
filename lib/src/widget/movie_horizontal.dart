@@ -6,7 +6,7 @@ import 'package:el_real_cine/src/models/peliculas_model.dart';
   
 class MovieHorizontal extends StatelessWidget {
   
-  final List<Pelicula> pelicula;
+  final List<Pelicula> peliculas;
   final Function siguientePagina;
 
   final _pageController = new PageController(
@@ -15,7 +15,7 @@ class MovieHorizontal extends StatelessWidget {
     viewportFraction: 0.3,
   );
   
-  MovieHorizontal({ @required this.pelicula, @required this.siguientePagina});
+  MovieHorizontal({ @required this.peliculas, @required this.siguientePagina});
 
 
   @override
@@ -31,19 +31,20 @@ class MovieHorizontal extends StatelessWidget {
   
     return Container(
       height: _screenSize.height * 0.2,
-      child: PageView(
+      child: PageView.builder(
         pageSnapping: false,
         controller: _pageController,
-        children: _tarjetas(context),
+        //children: _tarjetas(context),
+        itemCount: peliculas.length,
+        itemBuilder: (context, i) => _tarjeta(context, peliculas[i]),
       ),
     );
   }
 
 
-  List<Widget> _tarjetas(BuildContext context){
-    return pelicula.map( (pelicula) {
-
-      return Container(
+Widget _tarjeta(BuildContext context, Pelicula pelicula){
+ 
+  return Container(
         margin: EdgeInsets.only(right: 15.0),
         child: Column(
           children: <Widget>[
@@ -64,7 +65,34 @@ class MovieHorizontal extends StatelessWidget {
           ],
         ),
       );
-    }).toList();
-  }
+}
+
+  // List<Widget> _tarjetas(BuildContext context){
+  //   return peliculas.map( (pelicula) {
+
+  //           return Container(
+  //       margin: EdgeInsets.only(right: 15.0),
+  //       child: Column(
+  //         children: <Widget>[
+  //           ClipRRect(
+  //             borderRadius: BorderRadius.circular(20.0),
+  //             child: FadeInImage(
+  //               image: NetworkImage(pelicula.getPosterImg() ),
+  //               placeholder: AssetImage('assets/img/loading.gif'),
+  //               fit: BoxFit.cover,
+  //               height: 140.0,
+  //               ),
+  //           ),
+  //           SizedBox(height:5.0),
+  //           Text(pelicula.title,
+  //           overflow: TextOverflow.ellipsis,
+  //           style: Theme.of(context).textTheme.caption,
+  //           ),
+  //         ],
+  //       ),
+  //     );
+
+  //   }).toList();
+  // }
 
 }
